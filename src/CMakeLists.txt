@@ -1,13 +1,3 @@
-add_library(
-  BlackjackLib
-  cards/Card.cpp
-  cards/Deck.cpp
-  game/Game.cpp
-  game/UserDealerGame.cpp
-  io/IO.cpp
-  io/TerminalIO.cpp
-  player/Dealer.cpp
-  player/Player.cpp
-  player/User.cpp)
+add_library(Template Deck.cpp Player.cpp)
 
-target_link_libraries(BlackjackLib PUBLIC ${CONAN_LIBS})
+target_link_libraries(Template PUBLIC ${CONAN_LIBS})
