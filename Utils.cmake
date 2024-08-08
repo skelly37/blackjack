@@ -15,8 +15,9 @@ function(add_test_executable NAME)
   cmake_parse_arguments(ARGS "" "" "SOURCES" ${ARGN})
   add_executable(${NAME} ${ARGS_SOURCES})
 
-  target_link_libraries(${NAME} PUBLIC Template)
+  target_link_libraries(${NAME} PUBLIC BlackjackLib)
+  target_include_directories(${NAME} PUBLIC ${CMAKE_SOURCE_DIR}/test/utils)
 
   gtest_discover_tests(${NAME} WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
-  set_target_properties(${NAME} PROPERTIES FOLDER ${CMAKE_SOURCE_DIR}/tests)
+  set_target_properties(${NAME} PROPERTIES FOLDER ${CMAKE_SOURCE_DIR}/test)
 endfunction()

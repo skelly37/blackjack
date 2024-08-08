@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "Card.hpp"
+#include "cards/Card.hpp"
 
 using namespace testing;
 
@@ -21,7 +21,7 @@ TEST_F(CardTests, canCreate) {
 }
 
 TEST_F(CardTests, canGenerateString) {
-    const Card::Symbol symbol = Card::Symbol::SIX;
+    const Card::Symbol symbol = Card::Symbol::TEN;
     const Card::Color color = Card::Color::CLUBS;
 
     Card card{symbol, color};

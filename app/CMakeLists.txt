@@ -1,2 +1,2 @@
-add_executable(template-exe app.cpp)
-target_link_libraries(template-exe PUBLIC Template)
+add_executable(terminal-game app.cpp)
+target_link_libraries(terminal-game PUBLIC BlackjackLib)
