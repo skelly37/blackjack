@@ -1,3 +1,3 @@
-add_library(Template Deck.cpp Player.cpp)
+add_library(BlackjackLib Deck.cpp Player.cpp)
 
-target_link_libraries(Template PUBLIC ${CONAN_LIBS})
+target_link_libraries(BlackjackLib PUBLIC ${CONAN_LIBS})

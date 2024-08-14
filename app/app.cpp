@@ -12,8 +12,8 @@ void printHeader(const Player &p1, const Player &p2) {
 }
 
 void printHands(const Player &p1, const Player &p2) {
-    std::cout << fmt::format("[{:2}] {}: {}", p1.getCurrentScore(), p1.NAME, p1.getHand()) << "\n";
-    std::cout << fmt::format("[{:2}] {}: {}", p2.getCurrentScore(), p2.NAME, p2.getHand()) << "\n\n";
+    std::cout << fmt::format("[{:2}] {:10} {}", p1.getCurrentScore(), p1.NAME + ":", p1.getHand()) << "\n";
+    std::cout << fmt::format("[{:2}] {:10} {}", p2.getCurrentScore(), p2.NAME + ":", p2.getHand()) << "\n\n";
 }
 
 void print(const Player &p1, const Player &p2) {
@@ -46,7 +46,7 @@ Choice getUserChoice(const std::string& player_name) {
 }
 
 int main() {
-    std::array<Player, 2> players{Player{"player1"}, Player{"player2"}};
+    std::array<Player, 2> players{Player{"User"}, Player{"Dealer"}};
     Deck deck;
 
     std::string input;
@@ -55,14 +55,21 @@ int main() {
             deck.reshuffle();
         }
 
-        Player &p0 = players[0];
-        Player &p1 = players[1];
+        Player &user = players[0];
+        Player &dealer = players[1];
+
+        for(std::size_t i = 0; i<2; ++i) {
+            user.addCard(deck.getCard());
+            dealer.addCard(deck.getCard());
+        }
+
+        print(user, dealer);
 
         while (std::ranges::any_of(players, [](const Player &player) {
             return player.shouldMove();
         })) {
             for (Player &player: players) {
-                print(p0, p1);
+                print(user, dealer);
                 if (player.shouldMove()) {
                     std::ranges::all_of(players, [](const Player &player) {
                         return player.getCurrentScore() <= 21;
@@ -71,20 +78,20 @@ int main() {
             }
         }
 
-        print(p0, p1);
+        print(user, dealer);
 
-        if (p0.getCurrentScore() == p1.getCurrentScore()) {
+        if (user.getCurrentScore() == dealer.getCurrentScore()) {
             std::cout << "Draw!\n\n";
-            p0.draw();
-            p1.draw();
-        } else if ((p0.getCurrentScore() > p1.getCurrentScore() && p0.getCurrentScore() <= 21) || p1.getCurrentScore() > 21) {
-            std::cout << "Player 1 wins!\n\n";
-            p0.win();
-            p1.lose();
+            user.draw();
+            dealer.draw();
+        } else if ((user.getCurrentScore() > dealer.getCurrentScore() && user.getCurrentScore() <= 21) || dealer.getCurrentScore() > 21) {
+            std::cout << user.NAME << " wins!\n\n";
+            user.win();
+            dealer.lose();
         } else {
-            std::cout << "Player 2 wins!\n\n";
-            p0.lose();
-            p1.win();
+            std::cout << dealer.NAME <<" wins!\n\n";
+            user.lose();
+            dealer.win();
         }
 
         std::cout << "Press Q to quit, any other key to play once again\n";
