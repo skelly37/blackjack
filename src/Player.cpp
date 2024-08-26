@@ -46,8 +46,15 @@ std::string Player::getHand() const {
     return result;
 }
 
-std::string Player::getFirstCard() const {
-    return hand.empty()? "" : hand.at(0).to_string();
+Card Player::getFirstCard() const {
+    Card card = hand.at(0);
+
+    // hide info about ace becoming 11
+    if(card.value == 1) {
+        card.value = 11;
+    }
+
+    return card;
 }
 
 std::size_t Player::getCardsCount() const {

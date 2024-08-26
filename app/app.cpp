@@ -8,18 +8,30 @@
 #include <bits/ranges_algo.h>
 
 void printHeader(const Player &p1, const Player &p2) {
-    std::cout << fmt::format("Games (wins/draws/total): | {} ({}) | {} ({})", p1.NAME, p1.getWinsDrawsTotalFormattedString(), p2.NAME, p2.getWinsDrawsTotalFormattedString()) << "\n\n";
+    std::cout << fmt::format("Games (wins/draws/total): | {} ({}) | {} ({})", p1.NAME,
+                             p1.getWinsDrawsTotalFormattedString(), p2.NAME,
+                             p2.getWinsDrawsTotalFormattedString()) << "\n\n";
 }
 
-void printHands(const Player &p1, const Player &p2) {
-    std::cout << fmt::format("[{:2}] {:10} {}", p1.getCurrentScore(), p1.NAME + ":", p1.getHand()) << "\n";
-    std::cout << fmt::format("[{:2}] {:10} {}", p2.getCurrentScore(), p2.NAME + ":", p2.getHand()) << "\n\n";
+void printHand(const Player &player) {
+    std::cout << fmt::format("[{:2}] {:10} {}", player.getCurrentScore(), player.NAME + ":", player.getHand()) << "\n";
 }
 
-void print(const Player &p1, const Player &p2) {
+void printHiddenHand(const Player &player) {
+    Card first_card = player.getFirstCard();
+
+    std::cout << fmt::format("[{:2}] {:10} {}", first_card.value, player.NAME + ":", first_card.to_string());
+    for (std::size_t i = 1; i < player.getCardsCount(); ++i) {
+        std::cout << " |X|";
+    }
+    std::cout << "\n";
+}
+
+void print(const Player &user, const Player &dealer, bool hide_dealer = true) {
     system("clear");
-    printHeader(p1, p2);
-    printHands(p1, p2);
+    printHeader(user, dealer);
+    printHand(user);
+    hide_dealer ? printHiddenHand(dealer) : printHand(dealer);
 }
 
 enum class Choice {
@@ -27,19 +39,24 @@ enum class Choice {
     STAND,
 };
 
-Choice getUserChoice(const std::string& player_name) {
-    char input;
+Choice getUserChoice(const std::string &player_name) {
+    std::string input;
     while (true) {
         std::cout << "Turn of: " << player_name << "\n";
         std::cout << "Press H to hit, S to stand\n";
-        std::cin >> input;
-        input = tolower(input);
+        std::getline(std::cin, input);
 
-        if (input == 'h') {
+        if (input.empty()) {
+            continue;
+        }
+
+        char choice = tolower(input[0]);
+
+        if (choice == 'h') {
             return Choice::HIT;
         }
 
-        if (input == 's') {
+        if (choice == 's') {
             return Choice::STAND;
         }
     }
@@ -51,14 +68,14 @@ int main() {
 
     std::string input;
     do {
-        if(deck.getCardsLeftCount() < 20) {
+        if (deck.getCardsLeftCount() < 20) {
             deck.reshuffle();
         }
 
         Player &user = players[0];
         Player &dealer = players[1];
 
-        for(std::size_t i = 0; i<2; ++i) {
+        for (std::size_t i = 0; i < 2; ++i) {
             user.addCard(deck.getCard());
             dealer.addCard(deck.getCard());
         }
@@ -68,17 +85,25 @@ int main() {
         while (std::ranges::any_of(players, [](const Player &player) {
             return player.shouldMove();
         })) {
-            for (Player &player: players) {
-                print(user, dealer);
-                if (player.shouldMove()) {
-                    std::ranges::all_of(players, [](const Player &player) {
-                        return player.getCurrentScore() <= 21;
-                    }) && getUserChoice(player.NAME) == Choice::HIT ? player.addCard(deck.getCard()) : player.stand();
-                }
+            print(user, dealer);
+            if (user.shouldMove()) {
+                std::ranges::all_of(players, [](const Player &player) {
+                    return player.getCurrentScore() <= 21;
+                }) && getUserChoice(user.NAME) == Choice::HIT
+                    ? user.addCard(deck.getCard())
+                    : user.stand();
+            }
+            print(user, dealer);
+            if (dealer.shouldMove()) {
+                std::ranges::all_of(players, [](const Player &player) {
+                    return player.getCurrentScore() <= 21;
+                }) && dealer.getCurrentScore() < 17
+                    ? dealer.addCard(deck.getCard())
+                    : dealer.stand();
             }
         }
 
-        print(user, dealer);
+        print(user, dealer, false);
 
         if (user.getCurrentScore() == dealer.getCurrentScore()) {
             std::cout << "Draw!\n\n";
@@ -89,13 +114,13 @@ int main() {
             user.win();
             dealer.lose();
         } else {
-            std::cout << dealer.NAME <<" wins!\n\n";
+            std::cout << dealer.NAME << " wins!\n\n";
             user.lose();
             dealer.win();
         }
 
         std::cout << "Press Q to quit, any other key to play once again\n";
         std::cout << std::endl;
-        std::cin >> input;
+        std::getline(std::cin, input);
     } while (tolower(input[0]) != 'q');
 }

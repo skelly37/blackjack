@@ -12,7 +12,7 @@ public:
     [[nodiscard]] bool shouldMove() const;
     [[nodiscard]] std::size_t getCurrentScore() const;
     [[nodiscard]] std::string getHand() const;
-    [[nodiscard]] std::string getFirstCard() const;
+    [[nodiscard]] Card getFirstCard() const;
     [[nodiscard]] std::size_t getCardsCount() const;
     [[nodiscard]] std::size_t getPlayedGames() const;
     [[nodiscard]] std::size_t getWins() const;
