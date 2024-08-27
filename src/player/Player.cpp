@@ -1,10 +1,6 @@
 #include "player/Player.hpp"
 
-#include <boost/algorithm/string/trim.hpp>
-#include <fmt/format.h>
-
 #include <numeric>
-#include <algorithm>
 
 Player::Player(std::string &&name) : NAME(std::move(name)) {
 }
@@ -37,13 +33,8 @@ void Player::updateScore() {
     }
 }
 
-std::string Player::getHand() const {
-    std::string result = std::accumulate(hand.begin(), hand.end(), std::string{""}, [](const std::string &acc, const Card &card) {
-        return acc + card.to_string() + " ";
-    });
-
-    boost::algorithm::trim(result);
-    return result;
+const std::vector<Card>& Player::getHand() const {
+    return hand;
 }
 
 Card Player::getFirstCard() const {
@@ -76,10 +67,6 @@ std::size_t Player::getCurrentScore() const {
 
 std::size_t Player::getDraws() const {
     return draws;
-}
-
-std::string Player::getWinsDrawsTotalFormattedString() const {
-    return fmt::format("{}/{}/{}", getWins(), getDraws(), getPlayedGames());
 }
 
 void Player::draw() {

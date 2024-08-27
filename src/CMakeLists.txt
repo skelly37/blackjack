@@ -4,6 +4,8 @@ add_library(
   cards/Deck.cpp
   game/Game.cpp
   game/UserDealerGame.cpp
+  io/IO.cpp
+  io/TerminalIO.cpp
   player/Dealer.cpp
   player/Player.cpp
   player/User.cpp)

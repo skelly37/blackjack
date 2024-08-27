@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Card.hpp"
+#include "cards/Card.hpp"
 
 #include <vector>
 

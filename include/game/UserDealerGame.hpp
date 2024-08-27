@@ -1,14 +1,13 @@
 #pragma once
 
-#include "Game.hpp"
+#include "game/Game.hpp"
 #include "cards/Deck.hpp"
 #include "player/Player.hpp"
 
-#include <memory>
 
 class UserDealerGame : public Game {
 public:
-    explicit UserDealerGame(std::string&& username = "User");
+    explicit UserDealerGame(std::shared_ptr<IO> io, std::string&& username = "User");
 
 private:
     void initializeGame() override;

@@ -1,17 +1,14 @@
 #pragma once
 
-#include "Player.hpp"
+#include "player/Player.hpp"
+#include "io/IO.hpp"
 
 class User : public Player {
 public:
-    explicit User(std::string&& name = "User");
+    explicit User(std::shared_ptr<IO> io, std::string&& name = "User");
 
     void move(Deck& deck) override;
 
 private:
-    enum class Choice {
-        HIT,
-        STAND,
-    };
-    [[nodiscard]] Choice getUserChoice() const;
+    std::shared_ptr<IO> io;
 };

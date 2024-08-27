@@ -14,13 +14,12 @@ public:
     void stand();
     [[nodiscard]] bool shouldMove() const;
     [[nodiscard]] std::size_t getCurrentScore() const;
-    [[nodiscard]] std::string getHand() const;
+    [[nodiscard]] const std::vector<Card>& getHand() const;
     [[nodiscard]] Card getFirstCard() const;
     [[nodiscard]] std::size_t getCardsCount() const;
     [[nodiscard]] std::size_t getPlayedGames() const;
     [[nodiscard]] std::size_t getWins() const;
     [[nodiscard]] std::size_t getDraws() const;
-    [[nodiscard]] std::string getWinsDrawsTotalFormattedString() const;
 
     void win();
     void draw();
