@@ -14,18 +14,17 @@ public:
     void stand();
     [[nodiscard]] bool shouldMove() const;
     [[nodiscard]] std::size_t getCurrentScore() const;
-    [[nodiscard]] const std::vector<Card>& getHand() const;
+    [[nodiscard]] std::string getHand() const;
     [[nodiscard]] Card getFirstCard() const;
     [[nodiscard]] std::size_t getCardsCount() const;
     [[nodiscard]] std::size_t getPlayedGames() const;
     [[nodiscard]] std::size_t getWins() const;
     [[nodiscard]] std::size_t getDraws() const;
+    [[nodiscard]] std::string getWinsDrawsTotalFormattedString() const;
 
     void win();
     void draw();
     void lose();
-
-    [[nodiscard]] virtual std::size_t getAmountOfPointsToForceStand() const = 0;
 
     const std::string NAME;
     static constexpr std::size_t MAX_POINTS = 21;

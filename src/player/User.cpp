@@ -1,18 +1,36 @@
 #include "player/User.hpp"
 
+#include <iostream>
 
-User::User(std::shared_ptr<IO> io, std::string&& name) : Player(std::move(name)), io(std::move(io)) {
+User::User(std::string&& name) : Player(std::move(name)) {
 }
 
 void User::move(Deck &deck) {
-    if (shouldMove() && io->getUserChoice(this->NAME) == IO::UserChoice::HIT) {
+    if (getUserChoice() == Choice::HIT) {
         addCard(deck.getCard());
     } else {
         stand();
     }
 }
 
-std::size_t User::getAmountOfPointsToForceStand() const {
-    return 22;
-}
+User::Choice User::getUserChoice() const {
+    std::string input;
+    while (true) {
+        std::cout << "Turn of: " << NAME << "\n";
+        std::cout << "Press H to hit, S to stand\n";
+        std::getline(std::cin, input);
 
+        if (input.empty()) {
+            continue;
+        }
+
+        switch(tolower(input[0])) {
+        case 'h':
+            return Choice::HIT;
+        case 's':
+            return Choice::STAND;
+        default:
+            break;
+        }
+    }
+}

@@ -1,4 +1,11 @@
-add_library(BlackjackLib Dealer.cpp Deck.cpp Game.cpp Player.cpp User.cpp
-                         UserDealerGame.cpp)
+add_library(
+  BlackjackLib
+  cards/Card.cpp
+  cards/Deck.cpp
+  game/Game.cpp
+  game/UserDealerGame.cpp
+  player/Dealer.cpp
+  player/Player.cpp
+  player/User.cpp)
 
 target_link_libraries(BlackjackLib PUBLIC ${CONAN_LIBS})

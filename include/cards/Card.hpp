@@ -3,8 +3,6 @@
 #include <string>
 #include <unordered_map>
 
-namespace card_symbols {
-}
 
 struct Card {
     enum class Color {
@@ -73,16 +71,8 @@ struct Card {
     Symbol symbol;
     Color color;
 
-    Card(Symbol symbol, Color color) : value(VALUES.at(symbol)), symbol(symbol), color(color) {
-    }
+    Card(Symbol symbol, Color color);
 
-    [[nodiscard]] std::string to_string() const {
-        return COLORS.at(color) + SYMBOLS.at(symbol) + (symbol == Symbol::TEN? "" : " ");
-    }
-
-    void decreaseValueIfAce() {
-        if(symbol == Symbol::ACE) {
-            value = 1;
-        }
-    }
+    [[nodiscard]] std::string to_string() const;
+    void decreaseValueIfAce();
 };

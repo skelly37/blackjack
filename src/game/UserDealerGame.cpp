@@ -1,11 +1,12 @@
 #include "game/UserDealerGame.hpp"
 #include "player/User.hpp"
 #include "player/Dealer.hpp"
+#include "PrintHelpers.hpp"
 
 #include <algorithm>
 
 
-UserDealerGame::UserDealerGame(std::shared_ptr<IO> io, std::string &&username) : Game(io), user(std::make_shared<User>(io, std::move(username))),
+UserDealerGame::UserDealerGame(std::string &&username) : user(std::make_shared<User>(std::move(username))),
     dealer(std::make_shared<Dealer>()),
     players({user, dealer}) {
 }
@@ -18,38 +19,46 @@ void UserDealerGame::initializeGame() {
         user->addCard(deck.getCard());
         dealer->addCard(deck.getCard());
     }
-
-    io->displayGameUIWithP2Hidden(user, dealer);
+    print(user, dealer);
 }
 
 void UserDealerGame::hitAndStandLoop() {
     while (doesAnyPlayerNeedToMove() && !isAnyPlayerBusted()) {
         for (const std::shared_ptr<Player> &player: players) {
-            io->displayGameUIWithP2Hidden(user, dealer);
-            player->move(deck);
+            print(user, dealer);
+            if (shouldPlayerMove(player)) {
+                player->move(deck);
+            }
         }
     }
 }
 
 void UserDealerGame::finalizeGame() {
-    io->displayGameUIWithP2Visible(user, dealer);
+    print(user, dealer, false);
 
     if (user->getCurrentScore() == dealer->getCurrentScore()) {
+        std::cout << "Draw!\n\n";
         user->draw();
         dealer->draw();
-        io->displayDraw(user, dealer);
     } else if (
         (user->getCurrentScore() > dealer->getCurrentScore() && user->getCurrentScore() <= Player::MAX_POINTS) ||
         dealer->getCurrentScore() > Player::MAX_POINTS
         ) {
+        std::cout << user->NAME << " wins!\n\n";
         user->win();
         dealer->lose();
-        io->displayWin(user);
     } else {
+        std::cout << dealer->NAME << " wins!\n\n";
         user->lose();
         dealer->win();
-        io->displayWin(dealer);
     }
+
+    std::cout << "Press Q to quit, any other key to play once again\n";
+    std::cout << std::endl;
+}
+
+bool UserDealerGame::shouldPlayerMove(const std::shared_ptr<Player> &player) const {
+    return player->shouldMove() && !isAnyPlayerBusted();
 }
 
 bool UserDealerGame::isAnyPlayerBusted() const {

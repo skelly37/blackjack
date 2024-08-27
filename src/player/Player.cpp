@@ -1,6 +1,10 @@
 #include "player/Player.hpp"
 
+#include <boost/algorithm/string/trim.hpp>
+#include <fmt/format.h>
+
 #include <numeric>
+#include <algorithm>
 
 Player::Player(std::string &&name) : NAME(std::move(name)) {
 }
@@ -21,19 +25,25 @@ bool Player::shouldMove() const {
 void Player::updateScore() {
     std::size_t result = getCurrentScore();
 
+    // handle ace downgrade from 11 to 1 and bust
     if (result > MAX_POINTS) {
         for(Card& card : hand) {
             card.decreaseValueIfAce();
         }
-    }
 
-    if (getCurrentScore() >= getAmountOfPointsToForceStand()) {
-        does_need_next_move = false;
+        if (getCurrentScore() > MAX_POINTS) {
+            does_need_next_move = false;
+        }
     }
 }
 
-const std::vector<Card>& Player::getHand() const {
-    return hand;
+std::string Player::getHand() const {
+    std::string result = std::accumulate(hand.begin(), hand.end(), std::string{""}, [](const std::string &acc, const Card &card) {
+        return acc + card.to_string() + " ";
+    });
+
+    boost::algorithm::trim(result);
+    return result;
 }
 
 Card Player::getFirstCard() const {
@@ -66,6 +76,10 @@ std::size_t Player::getCurrentScore() const {
 
 std::size_t Player::getDraws() const {
     return draws;
+}
+
+std::string Player::getWinsDrawsTotalFormattedString() const {
+    return fmt::format("{}/{}/{}", getWins(), getDraws(), getPlayedGames());
 }
 
 void Player::draw() {
