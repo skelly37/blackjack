@@ -2,7 +2,6 @@
 #include "player/User.hpp"
 #include "player/Dealer.hpp"
 
-
 #include <algorithm>
 
 
