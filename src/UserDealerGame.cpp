@@ -23,13 +23,11 @@ void UserDealerGame::initializeGame() {
 }
 
 void UserDealerGame::hitAndStandLoop() {
-    while (std::ranges::any_of(players, [](const std::shared_ptr<Player> &player) {
-        return player->shouldMove();
-    })) {
+    while (doesAnyPlayerNeedToMove() && !isAnyPlayerBusted()) {
         for (const std::shared_ptr<Player> &player: players) {
             print(user, dealer);
             if (shouldPlayerMove(player)) {
-                user->move(deck);
+                player->move(deck);
             }
         }
     }
@@ -60,8 +58,17 @@ void UserDealerGame::finalizeGame() {
 }
 
 bool UserDealerGame::shouldPlayerMove(const std::shared_ptr<Player> &player) const {
-    return player->shouldMove() &&
-           std::ranges::all_of(players, [](const std::shared_ptr<Player> &player) {
-        return player->getCurrentScore() <= Player::MAX_POINTS;
+    return player->shouldMove() && !isAnyPlayerBusted();
+}
+
+bool UserDealerGame::isAnyPlayerBusted() const {
+    return std::ranges::any_of(players, [](const std::shared_ptr<Player> &player) {
+        return player->getCurrentScore() > Player::MAX_POINTS;
+    });
+}
+
+bool UserDealerGame::doesAnyPlayerNeedToMove() const {
+    return std::ranges::any_of(players, [](const std::shared_ptr<Player> &player) {
+        return player->shouldMove();
     });
 }

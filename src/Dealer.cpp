@@ -1,4 +1,5 @@
 #include "Dealer.hpp"
+#include <iostream>
 
 Dealer::Dealer() : Player("Dealer") {
 }

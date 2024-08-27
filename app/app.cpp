@@ -3,7 +3,6 @@
 #include <iostream>
 
 
-// todo poprawic logike bo przestalo sie spinac, tylko hitowac sie da i potem sie zacina
 // todo odcouplowac output od logiki
 // todo wiecej testow
 // todo przekminic qt czy cos tego typu
