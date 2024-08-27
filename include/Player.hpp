@@ -1,12 +1,15 @@
 #pragma once
 #include "Card.hpp"
+#include "Deck.hpp"
 
 #include <vector>
 
 class Player {
 public:
     explicit Player(std::string &&name);
+    virtual ~Player() = default;
 
+    virtual void move(Deck& deck) = 0;
     void addCard(Card &&card);
     void stand();
     [[nodiscard]] bool shouldMove() const;
@@ -24,6 +27,7 @@ public:
     void lose();
 
     const std::string NAME;
+    static constexpr std::size_t MAX_POINTS = 21;
 
 private:
     void clear();
