@@ -14,7 +14,6 @@ private:
     void hitAndStandLoop() override;
     void finalizeGame() override;
 
-    [[nodiscard]] bool shouldPlayerMove(const std::shared_ptr<Player>& player) const;
     [[nodiscard]] bool isAnyPlayerBusted() const;
     [[nodiscard]] bool doesAnyPlayerNeedToMove() const;
 

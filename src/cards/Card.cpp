@@ -6,6 +6,10 @@ Card::Card(Card::Symbol symbol, Card::Color color) :
     color(color) {
 }
 
+bool Card::operator==(const Card& other) const {
+    return this->symbol == other.symbol && this->color == other.color;
+}
+
 std::string Card::to_string() const {
     return COLORS.at(color) + SYMBOLS.at(symbol) + (symbol == Symbol::TEN? "" : " ");
 }

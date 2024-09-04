@@ -5,7 +5,7 @@ User::User(std::shared_ptr<IO> io, std::string&& name) : Player(std::move(name))
 }
 
 void User::move(Deck &deck) {
-    if (io->getUserChoice(this->NAME) == IO::UserChoice::HIT) {
+    if (shouldMove() && io->getUserChoice(this->NAME) == IO::UserChoice::HIT) {
         addCard(deck.getCard());
     } else {
         stand();

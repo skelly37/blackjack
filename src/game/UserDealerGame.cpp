@@ -26,9 +26,7 @@ void UserDealerGame::hitAndStandLoop() {
     while (doesAnyPlayerNeedToMove() && !isAnyPlayerBusted()) {
         for (const std::shared_ptr<Player> &player: players) {
             io->displayGameUIWithP2Hidden(user, dealer);
-            if (shouldPlayerMove(player)) {
-                player->move(deck);
-            }
+            player->move(deck);
         }
     }
 }
@@ -52,10 +50,6 @@ void UserDealerGame::finalizeGame() {
         dealer->win();
         io->displayWin(dealer);
     }
-}
-
-bool UserDealerGame::shouldPlayerMove(const std::shared_ptr<Player> &player) const {
-    return player->shouldMove() && !isAnyPlayerBusted();
 }
 
 bool UserDealerGame::isAnyPlayerBusted() const {
