@@ -11,7 +11,7 @@ bool Card::operator==(const Card& other) const {
 }
 
 std::string Card::to_string() const {
-    return COLORS.at(color) + SYMBOLS.at(symbol) + (symbol == Symbol::TEN? "" : " ");
+    return COLORS.at(color) + SYMBOLS.at(symbol);
 }
 
 void Card::decreaseValueIfAce() {

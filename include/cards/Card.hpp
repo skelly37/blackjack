@@ -36,19 +36,19 @@ struct Card {
     };
 
     static inline const std::unordered_map<Symbol, std::string> SYMBOLS{
-        {Symbol::TWO, "2"},
-        {Symbol::THREE, "3"},
-        {Symbol::FOUR, "4"},
-        {Symbol::FIVE, "5"},
-        {Symbol::SIX, "6"},
-        {Symbol::SEVEN, "7"},
-        {Symbol::EIGHT, "8"},
-        {Symbol::NINE, "9"},
+        {Symbol::TWO, "2 "},
+        {Symbol::THREE, "3 "},
+        {Symbol::FOUR, "4 "},
+        {Symbol::FIVE, "5 "},
+        {Symbol::SIX, "6 "},
+        {Symbol::SEVEN, "7 "},
+        {Symbol::EIGHT, "8 "},
+        {Symbol::NINE, "9 "},
         {Symbol::TEN, "10"},
-        {Symbol::JACK, "J"},
-        {Symbol::QUEEN, "Q"},
-        {Symbol::KING, "K"},
-        {Symbol::ACE, "A"},
+        {Symbol::JACK, "J "},
+        {Symbol::QUEEN, "Q "},
+        {Symbol::KING, "K "},
+        {Symbol::ACE, "A "},
     };
 
     static inline const std::unordered_map<Symbol, std::size_t> VALUES{
