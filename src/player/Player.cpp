@@ -21,15 +21,14 @@ bool Player::shouldMove() const {
 void Player::updateScore() {
     std::size_t result = getCurrentScore();
 
-    // handle ace downgrade from 11 to 1 and bust
     if (result > MAX_POINTS) {
         for(Card& card : hand) {
             card.decreaseValueIfAce();
         }
+    }
 
-        if (getCurrentScore() > MAX_POINTS) {
-            does_need_next_move = false;
-        }
+    if (getCurrentScore() >= getAmountOfPointsToForceStand()) {
+        does_need_next_move = false;
     }
 }
 

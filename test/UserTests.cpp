@@ -5,6 +5,7 @@
 
 using namespace testing;
 
+// Also contains generic Player tests (abstract class anyway)
 struct UserTests : public Test {
     IO::UserChoice current_choice = IO::UserChoice::HIT;
     std::function<IO::UserChoice()> user_choice_getter = [&] {

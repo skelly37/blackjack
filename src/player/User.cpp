@@ -12,3 +12,7 @@ void User::move(Deck &deck) {
     }
 }
 
+std::size_t User::getAmountOfPointsToForceStand() const {
+    return 22;
+}
+

@@ -25,6 +25,8 @@ public:
     void draw();
     void lose();
 
+    [[nodiscard]] virtual std::size_t getAmountOfPointsToForceStand() const = 0;
+
     const std::string NAME;
     static constexpr std::size_t MAX_POINTS = 21;
 

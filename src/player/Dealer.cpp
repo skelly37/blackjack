@@ -5,9 +5,13 @@ Dealer::Dealer() : Player("Dealer") {
 }
 
 void Dealer::move(Deck& deck) {
-    if(shouldMove() && getCurrentScore() < 17) {
+    if(shouldMove()) {
         addCard(deck.getCard());
     } else {
         stand();
     }
+}
+
+std::size_t Dealer::getAmountOfPointsToForceStand() const {
+    return 17;
 }
