@@ -6,6 +6,7 @@
 #include <QFrame>
 #include <QPainter>
 #include <fmt/format.h>
+#include <QSpacerItem>
 
 #include <filesystem>
 
@@ -40,7 +41,6 @@ private:
 class BlackjackGUI : public QWidget {
 public:
     explicit BlackjackGUI(QWidget *parent = nullptr) : QWidget(parent) {
-        // fixme make it actually aligned to the cards
         auto *player_name = new QLabel("player_name (W: 2 | D: 1 | T: 3)");
         player_name->setAlignment(Qt::AlignCenter);
         player_name->setStyleSheet("QLabel { color : black; font-size: 16px; }");
@@ -74,7 +74,11 @@ public:
         player_grid->addWidget(player_card9, 1, 3);
         player_grid->addWidget(player_card10, 1, 4);
         player_grid->addWidget(player_total, 2, 0, 1, 5, Qt::AlignCenter);
-
+        player_grid->setHorizontalSpacing(10);
+        player_grid->setVerticalSpacing(10);
+        player_grid->addItem(new QSpacerItem(10, 20), 0, 5);
+        player_grid->setColumnStretch(0, 1);
+        player_grid->setColumnStretch(5, 1);
         auto *dealer_card1 = new CardWidget("2");
         auto *dealer_card2 = new CardWidget("");
         auto *dealer_card3 = new CardWidget("");
@@ -101,19 +105,11 @@ public:
         dealer_grid->addWidget(dealer_card9, 1, 3);
         dealer_grid->addWidget(dealer_card10, 1, 4);
         dealer_grid->addWidget(dealer_total, 2, 0, 1, 5, Qt::AlignCenter);
-
-        auto *cards_layout = new QHBoxLayout;
-        cards_layout->addStretch();
-        cards_layout->addLayout(player_grid);
-        cards_layout->addStretch();
-        cards_layout->addLayout(dealer_grid);
-        cards_layout->addStretch();
-
-        auto *centered_cards_layout = new QVBoxLayout;
-        centered_cards_layout->addStretch();
-        centered_cards_layout->addLayout(cards_layout);
-        centered_cards_layout->addStretch();
-
+        dealer_grid->setHorizontalSpacing(10);
+        dealer_grid->setVerticalSpacing(10);
+        dealer_grid->addItem(new QSpacerItem(10, 20), 0, 5);
+        dealer_grid->setColumnStretch(0, 1);
+        dealer_grid->setColumnStretch(5, 1);
         auto *stats_layout = new QGridLayout;
         stats_layout->addWidget(player_name, 0, 1, Qt::AlignCenter);
         stats_layout->addWidget(dealer_name, 0, 3, Qt::AlignCenter);
@@ -137,19 +133,38 @@ public:
             "QPushButton:hover {color: black; font-size: 20px; font-weight: bold; background-color: gray}"
             );
 
-        auto *buttons_layout = new QHBoxLayout;
-        buttons_layout->addWidget(hit_button);
-        buttons_layout->addWidget(stand_button);
 
-        auto *main_layout = new QVBoxLayout;
-        main_layout->addLayout(top_layout);
-        main_layout->addLayout(centered_cards_layout);
-        main_layout->addLayout(buttons_layout);
+
+        auto *player_widget = new QWidget;
+        player_widget->setLayout(player_grid);
+
+        auto *left_layout = new QVBoxLayout;
+        left_layout->addWidget(player_name, 0, Qt::AlignCenter);
+        left_layout->addStretch();
+        left_layout->addWidget(player_widget, 0, Qt::AlignCenter);
+        left_layout->addStretch();
+        left_layout->addWidget(hit_button);
+
+        auto *dealer_widget = new QWidget;
+        dealer_widget->setLayout(dealer_grid);
+
+        auto *right_layout = new QVBoxLayout;
+        right_layout->addWidget(dealer_name, 0, Qt::AlignCenter);
+        right_layout->addStretch();
+        right_layout->addWidget(dealer_widget, 0, Qt::AlignCenter);
+        right_layout->addStretch();
+        right_layout->addWidget(stand_button);
+
+        auto *main_layout = new QHBoxLayout;
+        main_layout->addLayout(left_layout);
+        main_layout->addLayout(right_layout);
 
         setLayout(main_layout);
-
         setStyleSheet("QWidget { background-color: beige; }");
     }
+
+
+
 };
 
 int main(int argc, char *argv[]) {
@@ -157,7 +172,7 @@ int main(int argc, char *argv[]) {
 
     BlackjackGUI window;
     window.setWindowTitle("Blackjack");
-    window.resize(900, 600);
+    window.resize(1000, 600);
     window.show();
 
     return app.exec();
