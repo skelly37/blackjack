@@ -156,7 +156,9 @@ public:
         right_layout->addWidget(stand_button);
 
         auto *main_layout = new QHBoxLayout;
+
         main_layout->addLayout(left_layout);
+        main_layout->addSpacerItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
         main_layout->addLayout(right_layout);
 
         setLayout(main_layout);
