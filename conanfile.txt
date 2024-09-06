@@ -9,3 +9,8 @@ cmake
 
 [options]
 boost:without_test=True
+qt:shared=True
+qt:gui=True
+qt:widgets=True
+qt:with_x11=True
+qt:qtwayland=True
