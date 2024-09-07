@@ -12,7 +12,7 @@ static inline const std::filesystem::path& HEARTS {"hearts.png"};
 static inline const std::filesystem::path& SPADES {"spades.png"};
 }
 
-class CardWidget : public QFrame {
+class CardWidget final : public QFrame {
 public:
     explicit CardWidget(QString value = "", QWidget *parent = nullptr);
 

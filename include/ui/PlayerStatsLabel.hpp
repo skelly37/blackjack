@@ -5,11 +5,11 @@
 #include <QLabel>
 
 
-class PlayerStatsLabel : public QLabel {
+class PlayerStatsLabel final : public QLabel {
 public:
     explicit PlayerStatsLabel(std::shared_ptr<Player> player, QWidget* parent = nullptr);
 
-    void update();
+    void updateStats();
 
 private:
     [[nodiscard]] static QString generatePlayerLabel(const std::shared_ptr<Player>& player);

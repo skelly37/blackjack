@@ -5,7 +5,7 @@
 #include "ui/PushButton.hpp"
 #include "ui/PlayerStatsLabel.hpp"
 
-class GameWindow : public QWidget {
+class GameWindow final : public QWidget {
 public:
     GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dealer, QWidget *parent = nullptr);
 

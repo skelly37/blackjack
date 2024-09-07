@@ -5,7 +5,7 @@
 #include <QGridLayout>
 #include <QLabel>
 
-class CardsGrid : public QWidget {
+class CardsGrid final : public QWidget {
 public:
     CardsGrid(std::size_t rows, std::size_t cols, QWidget* parent = nullptr);
 

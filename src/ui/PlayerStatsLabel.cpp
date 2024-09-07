@@ -7,7 +7,7 @@ PlayerStatsLabel::PlayerStatsLabel(std::shared_ptr<Player> player, QWidget* pare
     setStyleSheet("QLabel { color : black; font-size: 16px; }");
 }
 
-void PlayerStatsLabel::update() {
+void PlayerStatsLabel::updateStats() {
     setText(generatePlayerLabel(player));
 }
 

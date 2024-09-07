@@ -6,7 +6,7 @@
 #include "ui/CardsGrid.hpp"
 #include "ui/PushButton.hpp"
 
-class VerticalHalfBox : public QVBoxLayout {
+class VerticalHalfBox final : public QVBoxLayout {
 public:
     VerticalHalfBox(std::shared_ptr<Player> player, std::unique_ptr<PushButtonState> initial_button_state, QWidget *parent = nullptr);
 
