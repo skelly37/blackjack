@@ -6,7 +6,7 @@
 
 class PushButton : public QPushButton {
 public:
-    PushButton(std::unique_ptr<PushButtonState> initial_state, QWidget* parent = nullptr);
+    explicit PushButton(std::unique_ptr<PushButtonState> initial_state, QWidget* parent = nullptr);
 
     void setState(std::unique_ptr<PushButtonState> state);
 
