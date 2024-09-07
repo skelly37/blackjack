@@ -7,5 +7,5 @@ VerticalHalfBox::VerticalHalfBox(std::shared_ptr<Player> player,
     addStretch();
     addWidget(&cards, 0, Qt::AlignHCenter);
     addStretch();
-    addWidget(&button, 0, Qt::AlignHCenter);
+    addWidget(&button);
 }
