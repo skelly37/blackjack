@@ -11,6 +11,6 @@ PushButton::PushButton(std::unique_ptr<PushButtonState> initial_state, QWidget *
 void PushButton::setState(std::unique_ptr<PushButtonState> state) {
     this->state = std::move(state);
 
-    setText(this->state->text());
+    setText(*this->state->text());
     this->callback = this->state->callback();
 }

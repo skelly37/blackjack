@@ -16,7 +16,7 @@ private:
 
     std::shared_ptr<Player> player;
 
-    PlayerStatsLabel stats {player};
-    CardsGrid cards {CARD_ROWS, CARD_COLS};
-    PushButton button;
+    PlayerStatsLabel* stats = new PlayerStatsLabel{player};
+    CardsGrid* cards = new CardsGrid{CARD_ROWS, CARD_COLS};
+    PushButton* button;
 };

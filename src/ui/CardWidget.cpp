@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <fmt/format.h>
 
-CardWidget::CardWidget(QString value, QWidget *parent) : QFrame(parent), value(std::move(value)) {
+CardWidget::CardWidget(QString* value, QWidget *parent) : QFrame(parent), value(value) {
     setFrameStyle(Panel | Sunken);
     setLineWidth(2);
     setFixedSize(77, 92);
@@ -23,5 +23,5 @@ void CardWidget::paintEvent(QPaintEvent *event) {
     QFont font("Arial", 30);
     font.setBold(true);
     painter.setFont(font);
-    painter.drawText(rect(), Qt::AlignCenter, value);
+    painter.drawText(rect(), Qt::AlignCenter, *value);
 }

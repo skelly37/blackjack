@@ -15,7 +15,7 @@ private:
     const std::size_t ROWS;
     const std::size_t COLS;
 
-    std::vector<std::vector<std::unique_ptr<CardWidget> > > hand;
-    QLabel total_points {"0"};
-    QGridLayout cards_grid;
+    std::vector<std::vector<CardWidget*> > hand;
+    QLabel* total_points = new QLabel{"0"};
+    QGridLayout* cards_grid = new QGridLayout;
 };

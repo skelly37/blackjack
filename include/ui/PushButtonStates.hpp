@@ -6,14 +6,14 @@ class PushButtonState {
 public:
     virtual ~PushButtonState() = default;
 
-    [[nodiscard]] virtual QString text() const = 0;
+    [[nodiscard]] virtual QString* text() const = 0;
     [[nodiscard]] virtual std::function<void()> callback() const = 0;
 };
 
 class HitButtonState final : public PushButtonState {
 public:
-    [[nodiscard]] QString text() const override {
-        return "Hit";
+    [[nodiscard]] QString* text() const override {
+        return new QString{"Hit"};
     }
     [[nodiscard]] std::function<void()> callback() const override {
         return [] {
@@ -23,8 +23,8 @@ public:
 
 class StandButtonState final : public PushButtonState {
 public:
-    [[nodiscard]] QString text() const override {
-        return "Stand";
+    [[nodiscard]] QString* text() const override {
+        return new QString{"Stand"};
     }
     [[nodiscard]] std::function<void()> callback() const override {
         return [] {
@@ -34,8 +34,8 @@ public:
 
 class PlayAgainButtonState final : public PushButtonState {
 public:
-    [[nodiscard]] QString text() const override {
-        return "Play again";
+    [[nodiscard]] QString* text() const override {
+        return new QString{"Play again"};
     }
     [[nodiscard]] std::function<void()> callback() const override {
         return [] {
@@ -45,8 +45,8 @@ public:
 
 class QuitButtonState final : public PushButtonState {
 public:
-    [[nodiscard]] QString text() const override {
-        return "Quit";
+    [[nodiscard]] QString* text() const override {
+        return new QString{"Quit"};
     }
     [[nodiscard]] std::function<void()> callback() const override {
         return [] {
