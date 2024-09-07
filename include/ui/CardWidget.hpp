@@ -14,12 +14,12 @@ static inline const std::filesystem::path& SPADES {"spades.png"};
 
 class CardWidget final : public QFrame {
 public:
-    explicit CardWidget(QString* value = new QString{""}, QWidget *parent = nullptr);
+    explicit CardWidget(QString value = "", QWidget *parent = nullptr);
 
     void setBackground(const std::filesystem::path& image);
 
 private:
     void paintEvent(QPaintEvent *event) override;
 
-    QString* value;
+    QString value;
 };

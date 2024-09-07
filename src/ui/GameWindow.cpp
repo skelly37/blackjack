@@ -5,7 +5,7 @@
 #include <QPushButton>
 
 GameWindow::GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dealer, QWidget *parent) : QWidget(parent), user(std::move(user)), dealer(std::move(dealer)) {
-    setWindowTitle(*TITLE);
+    setWindowTitle(TITLE);
     resize(WIDTH, HEIGHT);
 
     main_layout->addLayout(left_side);

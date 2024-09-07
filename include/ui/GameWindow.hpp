@@ -11,7 +11,7 @@ public:
 
     static constexpr unsigned int WIDTH = 1000;
     static constexpr unsigned int HEIGHT = 600;
-    static inline const QString* TITLE = new QString{"Blackjack"};
+    static inline const QString TITLE = "Blackjack";
 
 private:
     std::shared_ptr<Player> user;
