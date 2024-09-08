@@ -1,9 +1,11 @@
 #include "ui/CardsGrid.hpp"
+#include "communication/GameStatus.hpp"
 #include "cards/Card.hpp"
 
 
 CardsGrid::CardsGrid(std::shared_ptr<Player> player, std::size_t rows, std::size_t cols, QWidget* parent) : QWidget(parent), player(std::move(player)), ROWS(rows), COLS(cols){
     total_points->setStyleSheet("QLabel {color: black; font-size: 30px; font-weight: bold}");
+    maybe_status_text->setStyleSheet("QLabel {color: black; font-size: 40px; font-weight: bold}");
 
     for(std::size_t i = 0; i < ROWS; ++i) {
         for(std::size_t j = 0; j < COLS; ++j) {
@@ -17,6 +19,7 @@ CardsGrid::CardsGrid(std::shared_ptr<Player> player, std::size_t rows, std::size
     }
 
     cards_grid->addWidget(total_points, ROWS, 0, 1, 5, Qt::AlignCenter);
+    cards_grid->addWidget(maybe_status_text, ROWS+1, 0, 1, 5, Qt::AlignCenter);
 
     cards_grid->setHorizontalSpacing(10);
     cards_grid->setVerticalSpacing(10);
@@ -28,6 +31,16 @@ CardsGrid::CardsGrid(std::shared_ptr<Player> player, std::size_t rows, std::size
 }
 
 void CardsGrid::updateCards() {
+    if(is_win or is_draw) {
+        if(GameStatus::getStatus() == GameStatus::Status::FINISHED) {
+            maybe_status_text->setText(is_win? "WINNER" : "DRAW");
+        } else {
+            maybe_status_text->setText("");
+            is_win = false;
+            is_draw = false;
+        }
+    }
+
     if(player->getHand().empty()) {
         return;
     }
@@ -42,6 +55,14 @@ void CardsGrid::setAllCardsVisible() {
 
 void CardsGrid::setOnlyFirstCardVisible() {
     are_all_cards_visible = false;
+}
+
+void CardsGrid::markWin() {
+    is_win = true;
+}
+
+void CardsGrid::markDraw() {
+    is_draw = true;
 }
 
 void CardsGrid::updateCardsGrid() {

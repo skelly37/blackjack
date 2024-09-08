@@ -23,3 +23,13 @@ void VerticalHalfBox::setAllCardsVisible() {
 void VerticalHalfBox::setOnlyFirstCardVisible() {
     cards->setOnlyFirstCardVisible();
 }
+
+void VerticalHalfBox::win() {
+    player->win();
+    cards->markWin();
+}
+
+void VerticalHalfBox::draw() {
+    player->draw();
+    cards->markDraw();
+}

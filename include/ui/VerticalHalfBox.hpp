@@ -13,6 +13,8 @@ public:
     void updateState();
     void setAllCardsVisible();
     void setOnlyFirstCardVisible();
+    void win();
+    void draw();
 
 private:
     static constexpr std::size_t CARD_ROWS = 2;

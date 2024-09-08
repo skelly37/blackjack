@@ -1,9 +1,6 @@
 #include "ui/GameWindow.hpp"
 #include "communication/GameStatus.hpp"
 
-#include <QMessageBox>
-
-
 GameWindow::GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dealer, QWidget *parent) : QWidget(parent),
     user(std::move(
              user)),
@@ -40,6 +37,7 @@ void GameWindow::closeEvent(QCloseEvent *event) {
 
 void GameWindow::gameLoop() {
     GameStatus::start();
+    updateUI();
 
     if (deck.getCardsLeftCount() < 20) {
         deck.reshuffle();
@@ -69,26 +67,17 @@ void GameWindow::gameLoop() {
     updateUI();
 
     if (user->getCurrentScore() == dealer->getCurrentScore()) {
-        user->draw();
-        dealer->draw();
-        QMetaObject::invokeMethod(this, [&] {
-            QMessageBox(QMessageBox::NoIcon, "Draw", "Draw!").exec();
-        });
+        left_side->draw();
+        right_side->draw();
     } else if (
         (user->getCurrentScore() > dealer->getCurrentScore() && user->getCurrentScore() <= Player::MAX_POINTS) ||
         dealer->getCurrentScore() > Player::MAX_POINTS
         ) {
-        user->win();
+        left_side->win();
         dealer->lose();
-        QMetaObject::invokeMethod(this, [&] {
-            QMessageBox(QMessageBox::NoIcon, "Win", "You have won!").exec();
-        });
     } else {
         user->lose();
-        dealer->win();
-        QMetaObject::invokeMethod(this, [&] {
-            QMessageBox(QMessageBox::NoIcon, "Lose", "You have lost!").exec();
-        });
+        right_side->win();
     }
     updateUI();
 }

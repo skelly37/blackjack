@@ -13,6 +13,8 @@ public:
     void updateCards();
     void setAllCardsVisible();
     void setOnlyFirstCardVisible();
+    void markWin();
+    void markDraw();
 
 private:
     void updateCardsGrid();
@@ -22,8 +24,11 @@ private:
     const std::size_t ROWS;
     const std::size_t COLS;
     bool are_all_cards_visible = false;
+    bool is_win = false;
+    bool is_draw = false;
 
     std::vector<std::vector<CardWidget*> > hand;
     QLabel* total_points = new QLabel{"0"};
+    QLabel* maybe_status_text = new QLabel{""};
     QGridLayout* cards_grid = new QGridLayout;
 };
