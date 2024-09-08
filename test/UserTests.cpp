@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "player/User.hpp"
+#include "communication/UserChoice.hpp"
 
 using namespace testing;
 
@@ -75,6 +76,7 @@ TEST_F(UserTests, shouldNotMoveWhenBusted) {
 TEST_F(UserTests, shouldNotMoveWhenStood) {
     ASSERT_TRUE(user.shouldMove());
 
+    UserChoice::hit();
     user.move(deck);
     ASSERT_TRUE(user.shouldMove());
     ASSERT_GT(user.getCardsCount(), 0);
