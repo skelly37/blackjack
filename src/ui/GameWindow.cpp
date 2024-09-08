@@ -1,6 +1,8 @@
 #include "ui/GameWindow.hpp"
 #include "communication/GameStatus.hpp"
 
+#include <QMessageBox>
+
 
 GameWindow::GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dealer, QWidget *parent) : QWidget(parent),
     user(std::move(
@@ -69,15 +71,24 @@ void GameWindow::gameLoop() {
     if (user->getCurrentScore() == dealer->getCurrentScore()) {
         user->draw();
         dealer->draw();
+        QMetaObject::invokeMethod(this, [&] {
+            QMessageBox(QMessageBox::NoIcon, "Draw", "Draw!").exec();
+        });
     } else if (
         (user->getCurrentScore() > dealer->getCurrentScore() && user->getCurrentScore() <= Player::MAX_POINTS) ||
         dealer->getCurrentScore() > Player::MAX_POINTS
         ) {
         user->win();
         dealer->lose();
+        QMetaObject::invokeMethod(this, [&] {
+            QMessageBox(QMessageBox::NoIcon, "Win", "You have won!").exec();
+        });
     } else {
         user->lose();
         dealer->win();
+        QMetaObject::invokeMethod(this, [&] {
+            QMessageBox(QMessageBox::NoIcon, "Lose", "You have lost!").exec();
+        });
     }
     updateUI();
 }
