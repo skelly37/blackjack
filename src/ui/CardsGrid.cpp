@@ -3,7 +3,7 @@
 
 
 CardsGrid::CardsGrid(std::shared_ptr<Player> player, std::size_t rows, std::size_t cols, QWidget* parent) : QWidget(parent), player(std::move(player)), ROWS(rows), COLS(cols){
-    total_points->setStyleSheet("QLabel {color: black; font-size: 20px; font-weight: bold}");
+    total_points->setStyleSheet("QLabel {color: black; font-size: 30px; font-weight: bold}");
 
     for(std::size_t i = 0; i < ROWS; ++i) {
         for(std::size_t j = 0; j < COLS; ++j) {
