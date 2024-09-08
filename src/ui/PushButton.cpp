@@ -19,5 +19,10 @@ void PushButton::setState(std::unique_ptr<PushButtonState> state) {
     setText(this->state->text());
     this->callback = this->state->callback();
 
-    connect(this, &QPushButton::clicked, this, callback);
+    connect(this, &QPushButton::released, this, &PushButton::executeCallback);
+    update();
+}
+
+void PushButton::executeCallback() {
+    callback();
 }

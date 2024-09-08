@@ -11,6 +11,9 @@ public:
     static constexpr unsigned int HEIGHT = 600;
     static inline const QString TITLE = "Blackjack";
 
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 private:
     void gameLoop();
     void updateUI();

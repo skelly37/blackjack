@@ -12,6 +12,8 @@ public:
     void setState(std::unique_ptr<PushButtonState> state);
 
 private:
+    void executeCallback();
+
     std::unique_ptr<PushButtonState> state;
     std::function<void()> callback;
 };

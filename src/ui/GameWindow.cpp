@@ -3,7 +3,11 @@
 
 
 GameWindow::GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dealer, QWidget *parent) : QWidget(parent),
-    user(std::move(user)), dealer(std::move(dealer)) {
+    user(std::move(
+             user)),
+    dealer(
+        std::move(
+            dealer)) {
     setWindowTitle(TITLE);
     resize(WIDTH, HEIGHT);
 
@@ -19,11 +23,17 @@ GameWindow::GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dea
 }
 
 void GameWindow::play() {
-    while(GameStatus::getStatus() == GameStatus::Status::START_REQUESTED) {
+    while (GameStatus::getStatus() == GameStatus::Status::START_REQUESTED) {
         gameLoop();
-        while(GameStatus::getStatus() == GameStatus::Status::FINISHED) {}
+        while (GameStatus::getStatus() == GameStatus::Status::FINISHED) {
+        }
     }
     close();
+}
+
+void GameWindow::closeEvent(QCloseEvent *event) {
+    GameStatus::stop();
+    QWidget::closeEvent(event);
 }
 
 void GameWindow::gameLoop() {
@@ -93,4 +103,3 @@ bool GameWindow::doesAnyPlayerNeedToMove() const {
         return player->shouldMove();
     });
 }
-
