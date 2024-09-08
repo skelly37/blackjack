@@ -54,7 +54,9 @@ void GameWindow::gameLoop() {
 
     while (doesAnyPlayerNeedToMove() && !isAnyPlayerBusted()) {
         for (const std::shared_ptr<Player> &player: players) {
-            player->move(deck);
+            if(!isAnyPlayerBusted()) {
+                player->move(deck);
+            }
         }
         updateUI();
     }
