@@ -6,7 +6,7 @@ Player::Player(std::string &&name) : NAME(std::move(name)) {
 }
 
 void Player::addCard(Card &&card) {
-    hand.emplace_back(std::move(card));
+    hand.emplace_back(card);
     updateScore();
 }
 
@@ -19,9 +19,7 @@ bool Player::shouldMove() const {
 }
 
 void Player::updateScore() {
-    std::size_t result = getCurrentScore();
-
-    if (result > MAX_POINTS) {
+    if (getCurrentScore() > MAX_POINTS) {
         for(Card& card : hand) {
             card.decreaseValueIfAce();
         }
@@ -39,7 +37,6 @@ const std::vector<Card>& Player::getHand() const {
 Card Player::getFirstCard() const {
     Card card = hand.at(0);
 
-    // hide info about ace becoming 11
     if(card.value == 1) {
         card.value = 11;
     }

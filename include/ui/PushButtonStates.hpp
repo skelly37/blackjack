@@ -1,7 +1,5 @@
 #pragma once
 
-#include "communication/UserChoice.hpp"
-
 #include <QString>
 
 class PushButtonState {

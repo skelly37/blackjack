@@ -1,4 +1,7 @@
 #include "ui/GameWindow.hpp"
+
+#include <QCloseEvent>
+
 #include "communication/GameStatus.hpp"
 
 GameWindow::GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dealer, QWidget *parent) : QWidget(parent),
@@ -24,15 +27,15 @@ GameWindow::GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dea
 void GameWindow::play() {
     while (GameStatus::getStatus() == GameStatus::Status::START_REQUESTED) {
         gameLoop();
-        while (GameStatus::getStatus() == GameStatus::Status::FINISHED) {
-        }
+        while (GameStatus::getStatus() == GameStatus::Status::FINISHED) {}
     }
     close();
 }
 
 void GameWindow::closeEvent(QCloseEvent *event) {
     GameStatus::stop();
-    QWidget::closeEvent(event);
+    event->accept();
+    GameStatus::stop();
 }
 
 void GameWindow::gameLoop() {
@@ -61,10 +64,15 @@ void GameWindow::gameLoop() {
         updateUI();
     }
 
-    GameStatus::finish();
+
+    if(GameStatus::getStatus() != GameStatus::Status::STOP_REQUESTED) {
+        GameStatus::finish();
+    }
+
     left_side->setAllCardsVisible();
     right_side->setAllCardsVisible();
     updateUI();
+
 
     if (user->getCurrentScore() == dealer->getCurrentScore()) {
         left_side->draw();
@@ -83,6 +91,10 @@ void GameWindow::gameLoop() {
 }
 
 void GameWindow::updateUI() {
+    if(GameStatus::getStatus() == GameStatus::Status::STOP_REQUESTED) {
+        return;
+    }
+
     QMetaObject::invokeMethod(this, [&] {
         left_side->updateState();
     }, Qt::BlockingQueuedConnection);

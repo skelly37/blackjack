@@ -8,9 +8,13 @@ User::User(std::string&& name) : Player(std::move(name)) {
 }
 
 void User::move(Deck &deck) {
-    if (shouldMove() && UserChoice::getChoice() == UserChoice::Action::HIT) {
-        addCard(deck.getCard());
-    } else {
+    try {
+        if (shouldMove() && UserChoice::getChoice() == UserChoice::Action::HIT) {
+            addCard(deck.getCard());
+        } else {
+            stand();
+        }
+    } catch (const AppClosedException&) {
         stand();
     }
 }

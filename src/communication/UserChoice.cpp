@@ -1,7 +1,7 @@
+#include "communication/GameStatus.hpp"
 #include "communication/UserChoice.hpp"
 
 #include <thread>
-#include <player/User.hpp>
 
 void UserChoice::hit() {
     std::lock_guard l {write_mtx};
@@ -15,6 +15,10 @@ void UserChoice::stand() {
 
 UserChoice::Action UserChoice::getChoice() {
     while(true) {
+        if (GameStatus::getStatus() == GameStatus::Status::STOP_REQUESTED) {
+            throw AppClosedException{"App closed"};
+        }
+
         {
             std::lock_guard l {read_mtx};
             if(action.has_value()) {

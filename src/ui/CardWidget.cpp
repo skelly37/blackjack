@@ -4,7 +4,7 @@
 #include <fmt/format.h>
 #include <boost/algorithm/string.hpp>
 
-CardWidget::CardWidget(QString value, QWidget *parent) : QFrame(parent), value(value) {
+CardWidget::CardWidget(QString value, QWidget *parent) : QFrame(parent), value(std::move(value)) {
     setFrameStyle(Panel | Sunken);
     setLineWidth(2);
     setFixedSize(77, 92);
@@ -35,8 +35,10 @@ void CardWidget::setNoCardText() {
 
 void CardWidget::setBackground(const std::filesystem::path &image) {
     const std::string image_path = ASSETS_DIR / image;
-    const QString style_sheet = QString::fromStdString(fmt::format(
-                                                           "QFrame {{ background-image: url({}); color: orange; border: 1px solid black; }}", image_path));
+    const QString style_sheet = QString::fromStdString(
+        fmt::format(
+            "QFrame {{ background-image: url({}); color: orange; border: 1px solid black; }}", image_path
+            ));
 
 
     if(styleSheet() != style_sheet) {

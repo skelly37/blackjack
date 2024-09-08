@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QVBoxLayout>
-
 #include "ui/PlayerStatsLabel.hpp"
 #include "ui/CardsGrid.hpp"
 #include "ui/PushButton.hpp"
+
+#include <QVBoxLayout>
 
 class VerticalHalfBox final : public QVBoxLayout {
 public:
