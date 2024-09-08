@@ -23,6 +23,7 @@ void GameWindow::play() {
         gameLoop();
         while(GameStatus::getStatus() == GameStatus::Status::FINISHED) {}
     }
+    close();
 }
 
 void GameWindow::gameLoop() {

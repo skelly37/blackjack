@@ -1,5 +1,6 @@
 #include "ui/PushButtonStates.hpp"
 #include "communication/GameStatus.hpp"
+#include <iostream>
 
 QString HitButtonState::text() const {
     return "Hit";
