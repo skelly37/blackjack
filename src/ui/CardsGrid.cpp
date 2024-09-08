@@ -51,7 +51,6 @@ void CardsGrid::updateCardsGrid() {
             hand[i][j]->setNoCardBackground();
         }
     }
-    update();
 
     const std::vector<Card>& player_hand = player->getHand();
 
@@ -73,8 +72,6 @@ void CardsGrid::updateCardsGrid() {
         hand[0][0]->setCardText(player_hand.at(0).symbol);
         hand[0][0]->setBackground(player_hand.at(0).color);
     }
-
-    update();
 }
 
 void CardsGrid::updateTotalPoints(std::size_t points) {

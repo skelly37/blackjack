@@ -20,7 +20,6 @@ void PushButton::setState(std::unique_ptr<PushButtonState> state) {
     this->callback = this->state->callback();
 
     connect(this, &QPushButton::released, this, &PushButton::executeCallback);
-    update();
 }
 
 void PushButton::executeCallback() {
