@@ -2,10 +2,8 @@ add_library(
   BlackjackLib
   cards/Card.cpp
   cards/Deck.cpp
-  game/Game.cpp
-  game/UserDealerGame.cpp
-  io/IO.cpp
-  io/TerminalIO.cpp
+  communication/UserChoice.cpp
+  communication/GameStatus.cpp
   player/Dealer.cpp
   player/Player.cpp
   player/User.cpp
@@ -13,6 +11,7 @@ add_library(
   ui/CardsGrid.cpp
   ui/GameWindow.cpp
   ui/PushButton.cpp
+  ui/PushButtonStates.cpp
   ui/PlayerStatsLabel.cpp
   ui/VerticalHalfBox.cpp)
 

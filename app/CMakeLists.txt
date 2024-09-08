@@ -1,4 +1,2 @@
-add_executable(terminal-game app.cpp)
-add_executable(gui gui.cpp)
-target_link_libraries(terminal-game PUBLIC BlackjackLib)
-target_link_libraries(gui PUBLIC BlackjackLib)
+add_executable(blackjack main.cpp)
+target_link_libraries(blackjack PUBLIC BlackjackLib)

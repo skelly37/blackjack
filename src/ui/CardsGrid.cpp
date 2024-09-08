@@ -2,7 +2,7 @@
 #include "cards/Card.hpp"
 
 
-CardsGrid::CardsGrid(std::size_t rows, std::size_t cols, QWidget* parent) : QWidget(parent), ROWS(rows), COLS(cols){
+CardsGrid::CardsGrid(std::shared_ptr<Player> player, std::size_t rows, std::size_t cols, QWidget* parent) : QWidget(parent), player(std::move(player)), ROWS(rows), COLS(cols){
     total_points->setStyleSheet("QLabel {color: black; font-size: 20px; font-weight: bold}");
 
     for(std::size_t i = 0; i < ROWS; ++i) {
@@ -25,6 +25,42 @@ CardsGrid::CardsGrid(std::size_t rows, std::size_t cols, QWidget* parent) : QWid
     cards_grid->setColumnStretch(5, 1);
 
     setLayout(cards_grid);
+}
+
+void CardsGrid::updateCards() {
+    updateCardsGrid();
+    updateTotalPoints(are_all_cards_visible? player->getCurrentScore() : player->getFirstCard().value);
+}
+
+void CardsGrid::setAllCardsVisible() {
+    are_all_cards_visible = true;
+}
+
+void CardsGrid::setOnlyFirstCardVisible() {
+    are_all_cards_visible = false;
+}
+
+void CardsGrid::updateCardsGrid() {
+    const std::vector<Card>& player_hand = player->getHand();
+
+    std::size_t current_hand_idx = 0;
+    if (are_all_cards_visible) {
+        for(std::size_t i = 0; i < ROWS; ++i) {
+            for(std::size_t j = 0; j < COLS && current_hand_idx < player_hand.size(); ++j, ++current_hand_idx) {
+                hand[i][j]->setCardText(player_hand.at(current_hand_idx).symbol);
+                hand[i][j]->setBackground(player_hand.at(current_hand_idx).color);
+            }
+        }
+    } else {
+        for(std::size_t i = 0; i < ROWS; ++i) {
+            for(std::size_t j = 0; j < COLS && current_hand_idx < player_hand.size(); ++j, ++current_hand_idx) {
+                hand[i][j]->setNoCardText();
+                hand[i][j]->setCardBackBackground();
+            }
+        }
+        hand[0][0]->setCardText(player_hand.at(0).symbol);
+        hand[0][0]->setBackground(player_hand.at(0).color);
+    }
 }
 
 void CardsGrid::updateTotalPoints(std::size_t points) {

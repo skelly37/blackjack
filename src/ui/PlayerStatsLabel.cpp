@@ -4,7 +4,9 @@
 
 PlayerStatsLabel::PlayerStatsLabel(std::shared_ptr<Player> player, QWidget* parent) : QLabel(generatePlayerLabel(player), parent), player(std::move(player)) {
     setAlignment(Qt::AlignCenter);
+    setStyleSheet("");
     setStyleSheet("QLabel { color : black; font-size: 16px; }");
+    update();
 }
 
 void PlayerStatsLabel::updateStats() {

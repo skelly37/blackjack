@@ -2,14 +2,18 @@
 #include "player/Dealer.hpp"
 #include "player/User.hpp"
 
-#include "../test/utils/StubIO.hpp"
+#include <thread>
+
 
 #include <QApplication>
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
-    GameWindow window {std::make_shared<User>(std::make_shared<StubIO>()), std::make_shared<Dealer>()};
+    GameWindow window {std::make_shared<User>(), std::make_shared<Dealer>()};
+    std::jthread t{[&] {
+                       window.gameLoop();
+                   }};
 
     return app.exec();
 }

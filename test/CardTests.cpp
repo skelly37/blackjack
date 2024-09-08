@@ -4,9 +4,7 @@
 
 using namespace testing;
 
-struct CardTests : public Test {
-
-};
+struct CardTests : public Test {};
 
 
 TEST_F(CardTests, canCreate) {

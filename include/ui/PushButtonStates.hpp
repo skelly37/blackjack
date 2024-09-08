@@ -1,5 +1,7 @@
 #pragma once
 
+#include "communication/UserChoice.hpp"
+
 #include <QString>
 
 class PushButtonState {
@@ -8,48 +10,34 @@ public:
 
     [[nodiscard]] virtual QString text() const = 0;
     [[nodiscard]] virtual std::function<void()> callback() const = 0;
+    [[nodiscard]] virtual std::unique_ptr<PushButtonState> nextState() const = 0;
 };
+
 
 class HitButtonState final : public PushButtonState {
 public:
-    [[nodiscard]] QString text() const override {
-        return "Hit";
-    }
-    [[nodiscard]] std::function<void()> callback() const override {
-        return [] {
-        };
-    }
+    [[nodiscard]] QString text() const override;
+    [[nodiscard]] std::function<void()> callback() const override;
+    [[nodiscard]] std::unique_ptr<PushButtonState> nextState() const override;
 };
 
 class StandButtonState final : public PushButtonState {
 public:
-    [[nodiscard]] QString text() const override {
-        return "Stand";
-    }
-    [[nodiscard]] std::function<void()> callback() const override {
-        return [] {
-        };
-    }
+    [[nodiscard]] QString text() const override;
+    [[nodiscard]] std::function<void()> callback() const override;
+    [[nodiscard]] std::unique_ptr<PushButtonState> nextState() const override;
 };
 
 class PlayAgainButtonState final : public PushButtonState {
 public:
-    [[nodiscard]] QString text() const override {
-        return "Play again";
-    }
-    [[nodiscard]] std::function<void()> callback() const override {
-        return [] {
-        };
-    }
+    [[nodiscard]] QString text() const override;
+    [[nodiscard]] std::function<void()> callback() const override;
+    [[nodiscard]] std::unique_ptr<PushButtonState> nextState() const override;
 };
 
 class QuitButtonState final : public PushButtonState {
 public:
-    [[nodiscard]] QString text() const override {
-        return "Quit";
-    }
-    [[nodiscard]] std::function<void()> callback() const override {
-        return [] {
-        };
-    }
+    [[nodiscard]] QString text() const override;
+    [[nodiscard]] std::function<void()> callback() const override;
+    [[nodiscard]] std::unique_ptr<PushButtonState> nextState() const override;
 };

@@ -2,6 +2,7 @@
 
 #include <QPainter>
 #include <fmt/format.h>
+#include <boost/algorithm/string.hpp>
 
 CardWidget::CardWidget(QString value, QWidget *parent) : QFrame(parent), value(value) {
     setFrameStyle(Panel | Sunken);
@@ -10,10 +11,35 @@ CardWidget::CardWidget(QString value, QWidget *parent) : QFrame(parent), value(v
     setBackground(CardAssets::EMPTY);
 }
 
+void CardWidget::setBackground(Card::Color color) {
+    setBackground(COLOR_ASSETS.at(color));
+}
+
+void CardWidget::setCardBackBackground() {
+    setBackground(CardAssets::BACK);
+}
+
+void CardWidget::setNoCardBackground() {
+    setBackground(CardAssets::EMPTY);
+}
+
+void CardWidget::setCardText(Card::Symbol symbol) {
+    std::string text = Card::SYMBOLS.at(symbol);
+    boost::algorithm::trim(text);
+    this->value = text.c_str();
+}
+
+void CardWidget::setNoCardText() {
+    this->value = "";
+}
+
 void CardWidget::setBackground(const std::filesystem::path &image) {
     const std::string image_path = ASSETS_DIR / image;
-    const std::string style_sheet = fmt::format("QFrame {{ background-image: url({}); color: orange; border: 1px solid black; }}", image_path);
+    const std::string style_sheet = fmt::format(
+        "QFrame {{ background-image: url({}); color: orange; border: 1px solid black; }}", image_path);
+    setStyleSheet("");
     setStyleSheet(style_sheet.c_str());
+    update();
 }
 
 void CardWidget::paintEvent(QPaintEvent *event) {

@@ -1,4 +1,7 @@
 #pragma once
+
+#include "cards/Card.hpp"
+
 #include <QFrame>
 
 #include <filesystem>
@@ -16,10 +19,23 @@ class CardWidget final : public QFrame {
 public:
     explicit CardWidget(QString value = "", QWidget *parent = nullptr);
 
-    void setBackground(const std::filesystem::path& image);
+    void setBackground(Card::Color color);
+    void setCardBackBackground();
+    void setNoCardBackground();
+
+    void setCardText(Card::Symbol symbol);
+    void setNoCardText();
 
 private:
+    void setBackground(const std::filesystem::path& path);
     void paintEvent(QPaintEvent *event) override;
+
+    static inline const std::unordered_map<Card::Color, std::filesystem::path> COLOR_ASSETS {
+        {Card::Color::CLUBS, CardAssets::CLUBS},
+        {Card::Color::DIAMONDS, CardAssets::DIAMONDS},
+        {Card::Color::HEARTS, CardAssets::HEARTS},
+        {Card::Color::SPADES, CardAssets::SPADES},
+    };
 
     QString value;
 };

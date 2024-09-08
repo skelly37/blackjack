@@ -1,11 +1,11 @@
 #include "player/User.hpp"
+#include "communication/UserChoice.hpp"
 
-
-User::User(std::shared_ptr<IO> io, std::string&& name) : Player(std::move(name)), io(std::move(io)) {
+User::User(std::string&& name) : Player(std::move(name)) {
 }
 
 void User::move(Deck &deck) {
-    if (shouldMove() && io->getUserChoice(this->NAME) == IO::UserChoice::HIT) {
+    if (shouldMove() && UserChoice::getChoice() == UserChoice::Action::HIT) {
         addCard(deck.getCard());
     } else {
         stand();

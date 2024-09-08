@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
 #include "player/Dealer.hpp"
-#include "StubIO.hpp"
 
 using namespace testing;
 
