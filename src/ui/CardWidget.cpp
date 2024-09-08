@@ -35,11 +35,14 @@ void CardWidget::setNoCardText() {
 
 void CardWidget::setBackground(const std::filesystem::path &image) {
     const std::string image_path = ASSETS_DIR / image;
-    const std::string style_sheet = fmt::format(
-        "QFrame {{ background-image: url({}); color: orange; border: 1px solid black; }}", image_path);
-    setStyleSheet("");
-    setStyleSheet(style_sheet.c_str());
-    update();
+    const QString style_sheet = QString::fromStdString(fmt::format(
+                                                           "QFrame {{ background-image: url({}); color: orange; border: 1px solid black; }}", image_path));
+
+
+    if(styleSheet() != style_sheet) {
+        setStyleSheet("");
+        setStyleSheet(style_sheet);
+    }
 }
 
 void CardWidget::paintEvent(QPaintEvent *event) {

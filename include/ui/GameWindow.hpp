@@ -1,20 +1,18 @@
 #pragma once
 
-#include "ui/CardWidget.hpp"
 #include "ui/VerticalHalfBox.hpp"
-#include "ui/PushButton.hpp"
-#include "ui/PlayerStatsLabel.hpp"
 
 class GameWindow final : public QWidget {
 public:
     GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dealer, QWidget *parent = nullptr);
-    void gameLoop();
+    void play();
 
     static constexpr unsigned int WIDTH = 1000;
     static constexpr unsigned int HEIGHT = 600;
     static inline const QString TITLE = "Blackjack";
 
 private:
+    void gameLoop();
     void updateUI();
 
     [[nodiscard]] bool isAnyPlayerBusted() const;

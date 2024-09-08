@@ -1,4 +1,5 @@
 #include "ui/PushButtonStates.hpp"
+#include "communication/GameStatus.hpp"
 
 QString HitButtonState::text() const {
     return "Hit";
@@ -11,9 +12,13 @@ std::function<void()> HitButtonState::callback() const {
 }
 
 std::unique_ptr<PushButtonState> HitButtonState::nextState() const {
-    return std::make_unique<PlayAgainButtonState>();
+    if(GameStatus::getStatus() == GameStatus::Status::FINISHED) {
+        return std::make_unique<PlayAgainButtonState>();
+    }
+    return std::make_unique<HitButtonState>();
 }
 
+/////
 QString StandButtonState::text() const {
     return "Stand";
 }
@@ -25,33 +30,44 @@ std::function<void()> StandButtonState::callback() const {
 }
 
 std::unique_ptr<PushButtonState> StandButtonState::nextState() const {
-    return std::make_unique<QuitButtonState>();
+    if(GameStatus::getStatus() == GameStatus::Status::FINISHED) {
+        return std::make_unique<QuitButtonState>();
+    }
+    return std::make_unique<StandButtonState>();
 }
 
+//////////
 QString PlayAgainButtonState::text() const {
     return "Play Again";
 }
 
 std::function<void()> PlayAgainButtonState::callback() const {
     return [] {
-               //todo
+               GameStatus::start();
     };
 }
 
 std::unique_ptr<PushButtonState> PlayAgainButtonState::nextState() const {
-    return std::make_unique<HitButtonState>();
+    if(GameStatus::getStatus() == GameStatus::Status::START_REQUESTED) {
+        return std::make_unique<HitButtonState>();
+    }
+    return std::make_unique<PlayAgainButtonState>();
 }
 
+///////////
 QString QuitButtonState::text() const {
     return "Quit";
 }
 
 std::function<void()> QuitButtonState::callback() const {
     return [] {
-               //todo
+               GameStatus::stop();
     };
 }
 
 std::unique_ptr<PushButtonState> QuitButtonState::nextState() const {
-    return std::make_unique<StandButtonState>();
+    if(GameStatus::getStatus() == GameStatus::Status::START_REQUESTED) {
+        return std::make_unique<StandButtonState>();
+    }
+    return std::make_unique<QuitButtonState>();
 }

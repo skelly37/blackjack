@@ -28,6 +28,10 @@ CardsGrid::CardsGrid(std::shared_ptr<Player> player, std::size_t rows, std::size
 }
 
 void CardsGrid::updateCards() {
+    if(player->getHand().empty()) {
+        return;
+    }
+
     updateCardsGrid();
     updateTotalPoints(are_all_cards_visible? player->getCurrentScore() : player->getFirstCard().value);
 }
@@ -41,6 +45,13 @@ void CardsGrid::setOnlyFirstCardVisible() {
 }
 
 void CardsGrid::updateCardsGrid() {
+    for(std::size_t i = 0; i < ROWS; ++i) {
+        for(std::size_t j = 0; j < COLS; ++j) {
+            hand[i][j]->setNoCardText();
+            hand[i][j]->setNoCardBackground();
+        }
+    }
+
     const std::vector<Card>& player_hand = player->getHand();
 
     std::size_t current_hand_idx = 0;

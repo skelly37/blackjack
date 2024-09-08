@@ -1,14 +1,18 @@
 #include "communication/GameStatus.hpp"
 
 
-void GameStatus::start() {
-    is_finished = false;
-}
-
 void GameStatus::finish() {
-    is_finished = true;
+    status = Status::FINISHED;
 }
 
-[[nodiscard]] bool GameStatus::isFinished() {
-    return is_finished;
+void GameStatus::stop() {
+    status = Status::STOP_REQUESTED;
+}
+
+void GameStatus::start() {
+    status = Status::START_REQUESTED;
+}
+
+GameStatus::Status GameStatus::getStatus() {
+    return status;
 }

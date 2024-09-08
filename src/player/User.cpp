@@ -1,4 +1,7 @@
 #include "player/User.hpp"
+
+#include <iostream>
+
 #include "communication/UserChoice.hpp"
 
 User::User(std::string&& name) : Player(std::move(name)) {

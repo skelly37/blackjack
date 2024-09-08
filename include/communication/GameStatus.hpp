@@ -8,10 +8,17 @@ public:
     GameStatus &operator=(const GameStatus &) = delete;
     GameStatus &operator=(GameStatus &&) = delete;
 
+    enum class Status {
+        FINISHED,
+        START_REQUESTED,
+        STOP_REQUESTED,
+    };
+
     static void start();
     static void finish();
-    [[nodiscard]] static bool isFinished();
+    static void stop();
+    [[nodiscard]] static Status getStatus();
 
 private:
-    static inline bool is_finished = true;
+    static inline Status status = Status::START_REQUESTED;
 };

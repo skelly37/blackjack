@@ -3,11 +3,7 @@
 
 
 GameWindow::GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dealer, QWidget *parent) : QWidget(parent),
-    user(std::move(
-             user)),
-    dealer(
-        std::move(
-            dealer)) {
+    user(std::move(user)), dealer(std::move(dealer)) {
     setWindowTitle(TITLE);
     resize(WIDTH, HEIGHT);
 
@@ -20,6 +16,13 @@ GameWindow::GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dea
     setStyleSheet("QWidget { background-color: beige; }");
     update();
     show();
+}
+
+void GameWindow::play() {
+    while(GameStatus::getStatus() == GameStatus::Status::START_REQUESTED) {
+        gameLoop();
+        while(GameStatus::getStatus() == GameStatus::Status::FINISHED) {}
+    }
 }
 
 void GameWindow::gameLoop() {
@@ -46,11 +49,36 @@ void GameWindow::gameLoop() {
     }
 
     GameStatus::finish();
+    left_side->setAllCardsVisible();
+    right_side->setAllCardsVisible();
+    updateUI();
+
+    if (user->getCurrentScore() == dealer->getCurrentScore()) {
+        user->draw();
+        dealer->draw();
+    } else if (
+        (user->getCurrentScore() > dealer->getCurrentScore() && user->getCurrentScore() <= Player::MAX_POINTS) ||
+        dealer->getCurrentScore() > Player::MAX_POINTS
+        ) {
+        user->win();
+        dealer->lose();
+    } else {
+        user->lose();
+        dealer->win();
+    }
+    updateUI();
 }
 
 void GameWindow::updateUI() {
-    left_side->updateState();
-    right_side->updateState();
+    QMetaObject::invokeMethod(this, [&] {
+        left_side->updateState();
+    }, Qt::BlockingQueuedConnection);
+    QMetaObject::invokeMethod(this, [&] {
+        right_side->updateState();
+    }, Qt::BlockingQueuedConnection);
+    QMetaObject::invokeMethod(this, [&] {
+        update();
+    }, Qt::BlockingQueuedConnection);
 }
 
 bool GameWindow::isAnyPlayerBusted() const {
@@ -65,31 +93,3 @@ bool GameWindow::doesAnyPlayerNeedToMove() const {
     });
 }
 
-
-/*
-
-   void UserDealerGame::hitAndStandLoop() {
-
-   }
-
-   void UserDealerGame::finalizeGame() {
-   //io->displayGameUIWithP2Visible(user, dealer);
-
-   if (user->getCurrentScore() == dealer->getCurrentScore()) {
-   user->draw();
-   dealer->draw();
-   //io->displayDraw(user, dealer);
-   } else if (
-   (user->getCurrentScore() > dealer->getCurrentScore() && user->getCurrentScore() <= Player::MAX_POINTS) ||
-   dealer->getCurrentScore() > Player::MAX_POINTS
-   ) {
-   user->win();
-   dealer->lose();
-   //io->displayWin(user);
-   } else {
-   user->lose();
-   dealer->win();
-   //io->displayWin(dealer);
-   }
-   }
- */

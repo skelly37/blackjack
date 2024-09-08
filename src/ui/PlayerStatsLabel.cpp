@@ -6,7 +6,6 @@ PlayerStatsLabel::PlayerStatsLabel(std::shared_ptr<Player> player, QWidget* pare
     setAlignment(Qt::AlignCenter);
     setStyleSheet("");
     setStyleSheet("QLabel { color : black; font-size: 16px; }");
-    update();
 }
 
 void PlayerStatsLabel::updateStats() {

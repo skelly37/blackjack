@@ -7,7 +7,6 @@ PushButton::PushButton(std::unique_ptr<PushButtonState> initial_state, QWidget *
         "QPushButton {color: black; font-size: 20px; font-weight: bold; background-color: lightgray}"
         "QPushButton:hover {color: black; font-size: 20px; font-weight: bold; background-color: gray}"
         );
-    update();
 }
 
 void PushButton::setNextState() {

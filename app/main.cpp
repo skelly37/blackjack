@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 
     GameWindow window {std::make_shared<User>(), std::make_shared<Dealer>()};
     std::jthread t{[&] {
-                       window.gameLoop();
+                       window.play();
                    }};
 
     return app.exec();

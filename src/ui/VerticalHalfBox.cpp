@@ -1,7 +1,5 @@
 #include "ui/VerticalHalfBox.hpp"
 
-#include <communication/GameStatus.hpp>
-
 VerticalHalfBox::VerticalHalfBox(std::shared_ptr<Player> player,
                                  std::unique_ptr<PushButtonState> initial_button_state,
                                  QWidget *parent) : QVBoxLayout(parent), player(std::move(player)), button(new PushButton{std::move(initial_button_state)}) {
@@ -15,10 +13,7 @@ VerticalHalfBox::VerticalHalfBox(std::shared_ptr<Player> player,
 void VerticalHalfBox::updateState() {
     stats->updateStats();
     cards->updateCards();
-
-    if(GameStatus::isFinished()) {
-        button->setNextState();
-    }
+    button->setNextState();
 }
 
 void VerticalHalfBox::setAllCardsVisible() {
