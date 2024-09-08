@@ -16,7 +16,7 @@ CardsGrid::CardsGrid(std::shared_ptr<Player> player, std::size_t rows, std::size
         }
     }
 
-    cards_grid->addWidget(total_points, 2, 0, 1, 5, Qt::AlignCenter);
+    cards_grid->addWidget(total_points, ROWS, 0, 1, 5, Qt::AlignCenter);
 
     cards_grid->setHorizontalSpacing(10);
     cards_grid->setVerticalSpacing(10);
