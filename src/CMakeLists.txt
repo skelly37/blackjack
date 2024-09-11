@@ -7,11 +7,15 @@ add_library(
   player/Dealer.cpp
   player/Player.cpp
   player/User.cpp
+  ui/bottom_button_states/HitButtonState.cpp
+  ui/bottom_button_states/PlayAgainButtonState.cpp
+  ui/bottom_button_states/PushButtonState.cpp
+  ui/bottom_button_states/QuitButtonState.cpp
+  ui/bottom_button_states/StandButtonState.cpp
   ui/CardWidget.cpp
   ui/CardsGrid.cpp
   ui/GameWindow.cpp
   ui/PushButton.cpp
-  ui/PushButtonStates.cpp
   ui/PlayerStatsLabel.cpp
   ui/VerticalHalfBox.cpp)
 
