@@ -9,7 +9,7 @@ add_library(
   player/User.cpp
   ui/bottom_button_states/HitButtonState.cpp
   ui/bottom_button_states/PlayAgainButtonState.cpp
-  ui/bottom_button_states/PushButtonState.cpp
+  ui/bottom_button_states/BottomButtonState.cpp
   ui/bottom_button_states/QuitButtonState.cpp
   ui/bottom_button_states/StandButtonState.cpp
   ui/CardWidget.cpp

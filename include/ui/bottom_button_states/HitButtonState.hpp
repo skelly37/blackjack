@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ui/bottom_button_states/PushButtonState.hpp"
+#include "ui/bottom_button_states/BottomButtonState.hpp"
 
 class HitButtonState final : public PushButtonState {
 public:
