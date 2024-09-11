@@ -38,10 +38,7 @@ void GameWindow::closeEvent(QCloseEvent *event) {
     GameStatus::stop();
 }
 
-void GameWindow::gameLoop() {
-    GameStatus::start();
-    updateUI();
-
+void GameWindow::prepareRound() {
     if (deck.getCardsLeftCount() < 20) {
         deck.reshuffle();
     }
@@ -53,27 +50,45 @@ void GameWindow::gameLoop() {
 
     left_side->setAllCardsVisible();
     right_side->setOnlyFirstCardVisible();
-    updateUI();
+}
 
-    while (doesAnyPlayerNeedToMove() && !isAnyPlayerBusted()) {
-        for (const std::shared_ptr<Player> &player: players) {
-            if(!isAnyPlayerBusted()) {
-                player->move(deck);
-            }
+void GameWindow::doMoves() {
+    for (const std::shared_ptr<Player> &player: players) {
+        if(!isAnyPlayerBusted()) {
+            player->move(deck);
         }
-        updateUI();
     }
+}
 
-
+void GameWindow::showAllCards() {
     if(GameStatus::getStatus() != GameStatus::Status::STOP_REQUESTED) {
         GameStatus::finish();
     }
 
     left_side->setAllCardsVisible();
     right_side->setAllCardsVisible();
+}
+
+void GameWindow::gameLoop() {
+    GameStatus::start();
     updateUI();
 
+    prepareRound();
+    updateUI();
 
+    while (doesAnyPlayerNeedToMove() && !isAnyPlayerBusted()) {
+        doMoves();
+        updateUI();
+    }
+
+    showAllCards();
+    updateUI();
+
+    finishRound();
+    updateUI();
+}
+
+void GameWindow::finishRound() {
     if (user->getCurrentScore() == dealer->getCurrentScore()) {
         left_side->draw();
         right_side->draw();
@@ -87,7 +102,6 @@ void GameWindow::gameLoop() {
         user->lose();
         right_side->win();
     }
-    updateUI();
 }
 
 void GameWindow::updateUI() {

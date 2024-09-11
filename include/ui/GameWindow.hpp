@@ -14,6 +14,14 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
+    void prepareRound();
+
+    void doMoves();
+
+    void showAllCards();
+
+    void finishRound();
+
 private:
     void gameLoop();
     void updateUI();
