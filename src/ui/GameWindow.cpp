@@ -4,12 +4,10 @@
 
 #include "communication/GameStatus.hpp"
 
-GameWindow::GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dealer, QWidget *parent) : QWidget(parent),
-    user(std::move(
-             user)),
-    dealer(
-        std::move(
-            dealer)) {
+GameWindow::GameWindow(std::shared_ptr<Player> user, std::shared_ptr<Player> dealer, QWidget *parent) :
+    QWidget(parent),
+    user(std::move(user)),
+    dealer(std::move(dealer)) {
     setWindowTitle(TITLE);
     resize(WIDTH, HEIGHT);
 
