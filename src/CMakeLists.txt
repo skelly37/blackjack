@@ -17,7 +17,8 @@ add_library(
   ui/GameWindow.cpp
   ui/PushButton.cpp
   ui/PlayerStatsLabel.cpp
-  ui/VerticalHalfBox.cpp)
+  ui/VerticalHalfBox.cpp
+  BlackjackGame.cpp)
 
 target_link_libraries(BlackjackLib PUBLIC ${CONAN_LIBS})
 target_compile_definitions(BlackjackLib
