@@ -90,16 +90,18 @@ void GameWindow::finishRound() {
     if (user->getCurrentScore() == dealer->getCurrentScore()) {
         left_side->draw();
         right_side->draw();
-    } else if (
-        (user->getCurrentScore() > dealer->getCurrentScore() && user->getCurrentScore() <= Player::MAX_POINTS) ||
-        dealer->getCurrentScore() > Player::MAX_POINTS
-        ) {
+    } else if (isUserWinner()) {
         left_side->win();
         dealer->lose();
     } else {
         user->lose();
         right_side->win();
     }
+}
+
+[[nodiscard]] bool GameWindow::isUserWinner() const {
+    return (user->getCurrentScore() > dealer->getCurrentScore() && user->getCurrentScore() <= Player::MAX_POINTS) ||
+           dealer->getCurrentScore() > Player::MAX_POINTS;
 }
 
 void GameWindow::updateUI() {

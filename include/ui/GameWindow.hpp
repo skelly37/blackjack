@@ -11,24 +11,18 @@ public:
     static constexpr unsigned int HEIGHT = 600;
     static inline const QString TITLE = "Blackjack";
 
-protected:
-    void closeEvent(QCloseEvent *event) override;
-
-    void prepareRound();
-
-    void doMoves();
-
-    void showAllCards();
-
-    void finishRound();
-
 private:
+    void closeEvent(QCloseEvent *event) override;
     void gameLoop();
     void updateUI();
+    void prepareRound();
+    void doMoves();
+    void showAllCards();
+    void finishRound();
 
+    [[nodiscard]] bool isUserWinner() const;
     [[nodiscard]] bool isAnyPlayerBusted() const;
     [[nodiscard]] bool doesAnyPlayerNeedToMove() const;
-
 
     std::shared_ptr<Player> user;
     std::shared_ptr<Player> dealer;
