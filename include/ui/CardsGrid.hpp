@@ -17,8 +17,14 @@ public:
     void markDraw();
 
 private:
-    void updateCardsGrid();
+    void addWidgets();
+    void prepareLayout();
+    void updateWinOrDrawText();
     void updateTotalPoints(std::size_t points);
+    void updateCardsGrid();
+    void resetDisplayedTable();
+    void displayAllCards(const std::vector<Card> &player_hand, std::size_t &current_hand_idx);
+    void displayOnlyTheFirstCard(const std::vector<Card> &player_hand, std::size_t &current_hand_idx);
 
     std::shared_ptr<Player> player;
     const std::size_t ROWS;
