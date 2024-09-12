@@ -14,7 +14,7 @@ void UserChoice::stand() {
 }
 
 UserChoice::Action UserChoice::getChoice() {
-    while(GameStatus::getStatus() == GameStatus::Status::STOP_REQUESTED) {
+    while(GameStatus::getStatus() != GameStatus::Status::STOP_REQUESTED) {
         {
             std::lock_guard l {mtx};
             if(action.has_value()) {
