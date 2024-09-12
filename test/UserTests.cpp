@@ -1,19 +1,13 @@
 #include <gtest/gtest.h>
 
 #include "player/User.hpp"
-#include "StubIO.hpp"
+#include "communication/UserChoice.hpp"
 
 using namespace testing;
 
 // Also contains generic Player tests (abstract class anyway)
 struct UserTests : public Test {
-    IO::UserChoice current_choice = IO::UserChoice::HIT;
-    std::function<IO::UserChoice()> user_choice_getter = [&] {
-                                                             return current_choice;
-                                                         };
-    std::shared_ptr<StubIO> io = std::make_shared<StubIO>(user_choice_getter);
-
-    User user{io, "test_user"};
+    User user{"test_user"};
     Deck deck;
 };
 
@@ -82,6 +76,7 @@ TEST_F(UserTests, shouldNotMoveWhenBusted) {
 TEST_F(UserTests, shouldNotMoveWhenStood) {
     ASSERT_TRUE(user.shouldMove());
 
+    UserChoice::hit();
     user.move(deck);
     ASSERT_TRUE(user.shouldMove());
     ASSERT_GT(user.getCardsCount(), 0);

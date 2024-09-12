@@ -74,6 +74,5 @@ struct Card {
     Card(Symbol symbol, Color color);
     bool operator==(const Card& other) const;
 
-    [[nodiscard]] std::string to_string() const;
     void decreaseValueIfAce();
 };

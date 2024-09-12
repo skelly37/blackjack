@@ -2,9 +2,15 @@
 boost/1.85.0
 fmt/8.1.1
 gtest/1.14.0
+qt/6.7.1
 
 [generators]
 cmake
 
 [options]
 boost:without_test=True
+qt:shared=True
+qt:gui=True
+qt:widgets=True
+qt:with_x11=True
+qt:qtwayland=True

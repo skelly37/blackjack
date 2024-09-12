@@ -1,7 +1,8 @@
 #include "cards/Deck.hpp"
-#include <ranges>
+
 #include <algorithm>
 #include <random>
+#include <ranges>
 
 
 Deck::Deck(std::size_t amount_of_decks) : AMOUNT_OF_DECKS(amount_of_decks) {

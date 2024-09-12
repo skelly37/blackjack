@@ -4,9 +4,7 @@
 
 using namespace testing;
 
-struct CardTests : public Test {
-
-};
+struct CardTests : public Test {};
 
 
 TEST_F(CardTests, canCreate) {
@@ -18,15 +16,6 @@ TEST_F(CardTests, canCreate) {
     EXPECT_EQ(card.color, color);
     EXPECT_EQ(card.symbol, symbol);
     EXPECT_EQ(card.value, card.VALUES.at(symbol));
-}
-
-TEST_F(CardTests, canGenerateString) {
-    const Card::Symbol symbol = Card::Symbol::TEN;
-    const Card::Color color = Card::Color::CLUBS;
-
-    Card card{symbol, color};
-
-    EXPECT_EQ(card.to_string(), card.COLORS.at(color) + card.SYMBOLS.at(symbol));
 }
 
 TEST_F(CardTests, decreasesAceValue) {
