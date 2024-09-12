@@ -25,7 +25,6 @@ public:
     [[nodiscard]] static Action getChoice();
 
 private:
-    static inline std::mutex read_mtx;
-    static inline std::mutex write_mtx;
+    static inline std::mutex mtx;
     static inline std::optional<Action> action = std::nullopt;
 };
