@@ -9,6 +9,8 @@ Blackjack game written in C++20 using Qt6
 
 ## Demo
 
+https://github.com/user-attachments/assets/d9af2f80-6ea2-46d9-9d20-fc30424fb25b
+
 ## How to play Blackjack?
 
 - You have to get as close to 21 without exceeding it (bust)
