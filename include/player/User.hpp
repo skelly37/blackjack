@@ -8,4 +8,7 @@ public:
 
     void move(Deck& deck) override;
     [[nodiscard]] std::size_t getAmountOfPointsToForceStand() const override;
+
+private:
+    void doMove(Deck &deck);
 };
