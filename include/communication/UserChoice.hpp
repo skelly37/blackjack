@@ -1,6 +1,7 @@
 #pragma once
 #include <mutex>
 #include <optional>
+#include <stdexcept>
 
 class AppClosedException : public std::runtime_error {
 public:
